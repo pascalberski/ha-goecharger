@@ -1,11 +1,14 @@
 {
   "domain": "goecharger",
-  "name": "go-eCharger",
+  "name": "go-eCharger Integration",
   "documentation": "https://github.com/pascalberski/ha-goecharger",
-  "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/pascalberski/ha-goecharger/issues",
+  "dependencies": [],
   "version": "0.0.1",
   "codeowners": [
     "@pascalberski"
+  ],
+  "requirements": [
+    "httpx"
   ]
 }

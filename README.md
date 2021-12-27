@@ -5,6 +5,18 @@
 [![Project Maintenance][maintenance-shield]][user_profile]
 [![BuyMeCoffee][buymecoffeebadge]][buymecoffee]
 
+# go-eCharger Integration for Home Assistant
+
+## Available sensor
+- state (car)
+
+## Todo
+- allow charging (alw)
+- total energy (eto)
+- current sensor for each phase (nrg)
+- voltage sensor for each phase (nrg)
+- power sensor for each phase (nrg)
+
 
 
 

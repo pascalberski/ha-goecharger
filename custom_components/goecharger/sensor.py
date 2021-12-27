@@ -1,28 +1,40 @@
-"""Sensor platform for integration_blueprint."""
-from .const import DEFAULT_NAME, DOMAIN, ICON, SENSOR
-from .entity import IntegrationBlueprintEntity
+"""
+Sensor platform for Charger
+"""
+import logging
+
+from homeassistant.core import Config, HomeAssistant
+
+from .charger_sensors import StateSensor
+
+from .const import (
+    DOMAIN,
+)
 
 
-async def async_setup_entry(hass, entry, async_add_devices):
-    """Setup sensor platform."""
-    coordinator = hass.data[DOMAIN][entry.entry_id]
-    async_add_devices([IntegrationBlueprintSensor(coordinator, entry)])
+_LOGGER = logging.getLogger(__name__)
 
 
-class IntegrationBlueprintSensor(IntegrationBlueprintEntity):
-    """integration_blueprint Sensor class."""
+async def async_setup_platform(
+    hass: HomeAssistant, config: Config, async_add_entities, discovery_info=None
+):
+    """Setup charger sensor platform"""
+    _LOGGER.debug("Creating new charger sensor components")
 
-    @property
-    def name(self):
-        """Return the name of the sensor."""
-        return f"{DEFAULT_NAME}_{SENSOR}"
+    data = hass.data[DOMAIN]
+    # Configuration
+    #host = data.get("host")
+    #client = data.get("client")
 
-    @property
-    def state(self):
-        """Return the state of the sensor."""
-        return self.coordinator.data.get("body")
+    # charger sensors
+    sensor_coordinator = data.get("sensor_coordinator")
+    charger_sensors = create_charger_sensors(sensor_coordinator)
+    async_add_entities(charger_sensors, True)
 
-    @property
-    def icon(self):
-        """Return the icon of the sensor."""
-        return ICON
+
+def create_charger_sensors(coordinator):
+    charger_sensors = [
+        StateSensor(coordinator),
+    ]
+
+    return charger_sensors
