@@ -19,7 +19,7 @@
 [discord-shield]: https://img.shields.io/discord/330944238910963714.svg?style=for-the-badge
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
-[license]: https://github.com/pascalberski/ha-goecharger/blob/main/LICENSE
+[license]: https://github.com/pascalberski/ha-goecharger/blob/master/LICENSE
 [license-shield]: https://img.shields.io/github/license/pascalberski/ha-goecharger.svg?style=for-the-badge
 [maintenance-shield]: https://img.shields.io/badge/maintainer-Pascal%20Berski%20@pascalberski-blue.svg?style=for-the-badge
 [releases-shield]: https://img.shields.io/github/release/pascalberski/ha-goecharger.svg?style=for-the-badge
