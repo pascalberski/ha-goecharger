@@ -1,12 +1,12 @@
 {
-  "domain": "integration_blueprint",
-  "name": "Integration blueprint",
-  "documentation": "https://github.com/custom-components/integration_blueprint",
+  "domain": "ha-goecharger",
+  "name": "go-echarger Integration",
+  "documentation": "https://github.com/pascalberski/ha-goecharger",
   "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/custom-components/integration_blueprint/issues",
-  "version": "0.0.0",
+  "issue_tracker": "https://github.com/pascalberski/ha-goecharger/issues",
+  "version": "0.0.1",
   "config_flow": true,
   "codeowners": [
-    "@ludeeus"
+    "@pascalberski"
   ]
 }
