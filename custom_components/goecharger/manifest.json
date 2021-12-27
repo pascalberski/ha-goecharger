@@ -5,7 +5,6 @@
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/pascalberski/ha-goecharger/issues",
   "version": "0.0.1",
-  "config_flow": true,
   "codeowners": [
     "@pascalberski"
   ]
