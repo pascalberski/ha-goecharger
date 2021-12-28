@@ -5,7 +5,7 @@ import logging
 
 from homeassistant.core import Config, HomeAssistant
 
-from .charger_sensors import StateSensor
+from .charger_sensors import StateSensor, AllowSensor
 
 from .const import (
     DOMAIN,
@@ -23,8 +23,8 @@ async def async_setup_platform(
 
     data = hass.data[DOMAIN]
     # Configuration
-    #host = data.get("host")
-    #client = data.get("client")
+    # host = data.get("host")
+    # client = data.get("client")
 
     # charger sensors
     sensor_coordinator = data.get("sensor_coordinator")
@@ -35,6 +35,7 @@ async def async_setup_platform(
 def create_charger_sensors(coordinator):
     charger_sensors = [
         StateSensor(coordinator),
+        AllowSensor(coordinator),
     ]
 
     return charger_sensors
