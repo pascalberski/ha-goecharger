@@ -5,11 +5,12 @@ import logging
 
 from homeassistant.helpers.entity import Entity
 
-from .const import ICON_PLUG
+from .const import ICON_ALLOW, ICON_PLUG
 
 from .coordinators import SensorDataUpdateCoordinator
 
 _LOGGER = logging.getLogger(__name__)
+
 
 class ApiSensor(Entity):
     """
@@ -69,6 +70,7 @@ class StateSensor(ApiSensor):
     """
     Displays car attribute [Ready|Charging|Waiting|Finished]
     """
+
     _state = "Unknown"
 
     @property
@@ -104,3 +106,41 @@ class StateSensor(ApiSensor):
     def icon(self):
         """Sensor icon"""
         return ICON_PLUG
+
+
+class AllowSensor(ApiSensor):
+    """
+    Displays alw sensor [True|False]
+    """
+
+    _state = "Unknown"
+
+    @property
+    def name(self):
+        """Sensor name"""
+        return "Charger Allow"
+
+    @property
+    def unique_id(self):
+        """Unique entity id"""
+        return "goecharger:allow"
+
+    @property
+    def state(self):
+        """Sensor state"""
+        alw = self._get_status().get("alw")
+        _LOGGER.debug("allow (alw): %s", alw)
+        if alw:
+            if alw == "1":
+                self._state = True
+            if alw == "0":
+                self._state = False
+        else:
+            self._state = "Unknown"
+
+        return self._state
+
+    @property
+    def icon(self):
+        """Sensor icon"""
+        return ICON_ALLOW
