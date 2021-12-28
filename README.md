@@ -9,9 +9,9 @@
 
 ## Available sensor
 - state (car)
+- allow charging (alw)
 
 ## Todo
-- allow charging (alw)
 - total energy (eto)
 - current sensor for each phase (nrg)
 - voltage sensor for each phase (nrg)

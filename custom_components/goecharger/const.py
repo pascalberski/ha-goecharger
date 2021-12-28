@@ -5,7 +5,7 @@ Constants for go-echarger
 NAME = "go-eCharger Integration"
 DOMAIN = "goecharger"
 DOMAIN_DATA = f"{DOMAIN}_data"
-VERSION = "0.0.1"
+VERSION = "0.0.2"
 DEFAULT_NAME = "goecharger"
 
 ISSUE_URL = "https://github.com/pascalberski/ha-goecharger/issues"
