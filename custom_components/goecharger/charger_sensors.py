@@ -61,13 +61,13 @@ class ApiSensor(Entity):
     def _get_status(self):
         try:
             return self.coordinator.data
-        except Exception as e:
-            _LOGGER.error(f"Unable to get api data\n{e}")
+        except Exception as exc:
+            _LOGGER.error("Unable to get api data\n%s", exc)
 
 
 class StateSensor(ApiSensor):
     """
-    Displays car attribute [ready|charging|waiting|finished]
+    Displays car attribute [Ready|Charging|Waiting|Finished]
     """
     _state = "Unknown"
 
@@ -85,7 +85,7 @@ class StateSensor(ApiSensor):
     def state(self):
         """Sensor state"""
         car = self._get_status().get("car")
-        _LOGGER.debug(f"status (car): {car}")
+        _LOGGER.debug("status (car): %s", car)
         if car:
             if car == "1":
                 self._state = "Ready"
@@ -104,4 +104,3 @@ class StateSensor(ApiSensor):
     def icon(self):
         """Sensor icon"""
         return ICON_PLUG
-        
