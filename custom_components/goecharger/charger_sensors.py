@@ -88,15 +88,15 @@ class StateSensor(ApiSensor):
         _LOGGER.debug(f"status (car): {car}")
         if car:
             if car == "1":
-                self._state = "ready"
+                self._state = "Ready"
             if car == "2":
-                self._state = "charging"
+                self._state = "Charging"
             if car == "3":
-                self._state = "waiting"
+                self._state = "Waiting"
             if car == "4":
-                self._state = "finished"
+                self._state = "Finished"
         else:
-            self._state = "unavailable"
+            self._state = "Unknown"
 
         return self._state
 
