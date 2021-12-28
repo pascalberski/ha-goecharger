@@ -39,7 +39,6 @@ async def async_setup(hass: HomeAssistant, config: Config):
     hass.data[DOMAIN]["host"] = host
     hass.data[DOMAIN]["client"] = client
 
-    
     _LOGGER.debug("initialising sensor coordinator")
     sensor_coordinator = SensorDataUpdateCoordinator(hass, client)
     await sensor_coordinator.async_refresh()
