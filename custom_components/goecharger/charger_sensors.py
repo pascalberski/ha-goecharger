@@ -5,7 +5,14 @@ import logging
 
 from homeassistant.helpers.entity import Entity
 
-from .const import ICON_ALLOW, ICON_CURRENT, ICON_PLUG, ICON_ENERGY, ICON_VOLTAGE
+from .const import (
+    ICON_ALLOW,
+    ICON_CURRENT,
+    ICON_PLUG,
+    ICON_ENERGY,
+    ICON_POWER,
+    ICON_VOLTAGE,
+)
 
 from .coordinators import SensorDataUpdateCoordinator
 
@@ -252,7 +259,6 @@ class CurrentSensor(ApiSensor):
         _LOGGER.debug("energy (nrg): %s", nrg)
         if nrg:
             current = nrg[self.phase + 3]
-            _LOGGER.debug(f"current L{self.phase}: {current}")
             self._state = float(current) / 10
         else:
             self._state = "Unknown"
@@ -268,3 +274,87 @@ class CurrentSensor(ApiSensor):
     def unit_of_measurement(self):
         """Sensor unit of measurement"""
         return "A"
+
+
+class PowerSensor(ApiSensor):
+    """
+    Displays nrg sensor (power)
+    """
+
+    _state = "Unknown"
+
+    @property
+    def name(self):
+        """Sensor name"""
+        return f"Charger Power L{self.phase}"
+
+    @property
+    def unique_id(self):
+        """Unique entity id"""
+        return f"goecharger:power_L{self.phase}"
+
+    @property
+    def state(self):
+        """Sensor state"""
+        nrg = self._get_status().get("nrg")
+        power = -1
+        _LOGGER.debug("energy (nrg): %s", nrg)
+        if nrg:
+            power = nrg[self.phase + 6]
+            self._state = float(power) / 10
+        else:
+            self._state = "Unknown"
+
+        return self._state
+
+    @property
+    def icon(self):
+        """Sensor icon"""
+        return ICON_POWER
+
+    @property
+    def unit_of_measurement(self):
+        """Sensor unit of measurement"""
+        return "kW"
+
+
+class TotalPowerSensor(ApiSensor):
+    """
+    Displays nrg sensor (total_power)
+    """
+
+    _state = "Unknown"
+
+    @property
+    def name(self):
+        """Sensor name"""
+        return "Charger Total Power"
+
+    @property
+    def unique_id(self):
+        """Unique entity id"""
+        return "goecharger:total_power"
+
+    @property
+    def state(self):
+        """Sensor state"""
+        nrg = self._get_status().get("nrg")
+        power = -1
+        _LOGGER.debug("energy (nrg): %s", nrg)
+        if nrg:
+            power = nrg[11]
+            self._state = float(power) / 100
+        else:
+            self._state = "Unknown"
+
+        return self._state
+
+    @property
+    def icon(self):
+        """Sensor icon"""
+        return ICON_POWER
+
+    @property
+    def unit_of_measurement(self):
+        """Sensor unit of measurement"""
+        return "kW"

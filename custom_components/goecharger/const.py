@@ -17,6 +17,7 @@ ICON_ALLOW = "mdi:check-bold"
 ICON_ENERGY = "mdi:lightning-bolt-circle"
 ICON_CURRENT = "mdi:lightning-bolt-outline"
 ICON_VOLTAGE = "mdi:lightning-bolt"
+ICON_POWER = "mdi:car-electric"
 
 # Platforms
 SENSOR = "sensor"

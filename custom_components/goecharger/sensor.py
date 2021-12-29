@@ -7,9 +7,11 @@ from homeassistant.core import Config, HomeAssistant
 
 from .charger_sensors import (
     CurrentSensor,
+    PowerSensor,
     StateSensor,
     AllowSensor,
     TotalEnergySensor,
+    TotalPowerSensor,
     VoltageSensor,
 )
 
@@ -43,10 +45,12 @@ def create_charger_sensors(coordinator):
         StateSensor(coordinator),
         AllowSensor(coordinator),
         TotalEnergySensor(coordinator),
+        TotalPowerSensor(coordinator),
     ]
 
     for i in range(1, 4):
         charger_sensors.append(VoltageSensor(coordinator, i))
         charger_sensors.append(CurrentSensor(coordinator, i))
+        charger_sensors.append(PowerSensor(coordinator, i))
 
     return charger_sensors
