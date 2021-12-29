@@ -5,7 +5,7 @@ import logging
 
 from homeassistant.helpers.entity import Entity
 
-from .const import ICON_ALLOW, ICON_PLUG, ICON_ENERGY, ICON_VOLTAGE
+from .const import ICON_ALLOW, ICON_CURRENT, ICON_PLUG, ICON_ENERGY, ICON_VOLTAGE
 
 from .coordinators import SensorDataUpdateCoordinator
 
@@ -17,11 +17,7 @@ class ApiSensor(Entity):
     Status Api Sensor
     """
 
-    def __init__(
-        self,
-        coordinator: SensorDataUpdateCoordinator,
-        phase = 0
-    ):
+    def __init__(self, coordinator: SensorDataUpdateCoordinator, phase=0):
         """Initialize the sensor"""
         self.coordinator = coordinator
         self.phase = phase
@@ -214,8 +210,7 @@ class VoltageSensor(ApiSensor):
         _LOGGER.debug("energy (nrg): %s", nrg)
         if nrg:
             volt = nrg[self.phase - 1]
-            if volt:
-                self._state = int(volt)
+            self._state = int(volt)
         else:
             self._state = "Unknown"
 
@@ -230,3 +225,46 @@ class VoltageSensor(ApiSensor):
     def unit_of_measurement(self):
         """Sensor unit of measurement"""
         return "V"
+
+
+class CurrentSensor(ApiSensor):
+    """
+    Displays nrg sensor (current)
+    """
+
+    _state = "Unknown"
+
+    @property
+    def name(self):
+        """Sensor name"""
+        return f"Charger Current L{self.phase}"
+
+    @property
+    def unique_id(self):
+        """Unique entity id"""
+        return f"goecharger:current_L{self.phase}"
+
+    @property
+    def state(self):
+        """Sensor state"""
+        nrg = self._get_status().get("nrg")
+        current = -1
+        _LOGGER.debug("energy (nrg): %s", nrg)
+        if nrg:
+            current = nrg[self.phase + 3]
+            _LOGGER.debug(f"current L{self.phase}: {current}")
+            self._state = float(current) / 10
+        else:
+            self._state = "Unknown"
+
+        return self._state
+
+    @property
+    def icon(self):
+        """Sensor icon"""
+        return ICON_CURRENT
+
+    @property
+    def unit_of_measurement(self):
+        """Sensor unit of measurement"""
+        return "A"
