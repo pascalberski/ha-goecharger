@@ -14,10 +14,10 @@ goecharger:
   chargers:
     - id: 1
       name: Charger1
-      host: ip/hosname
+      host: ip/hostname
     - id: 2
       name: Charger2
-      host: ip/hosname
+      host: ip/hostname
 ```
 
 ### Available sensor
