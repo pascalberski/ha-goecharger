@@ -5,7 +5,7 @@ import logging
 
 from homeassistant.helpers.entity import Entity
 
-from .const import ICON_ALLOW, ICON_PLUG, ICON_ENERGY
+from .const import ICON_ALLOW, ICON_PLUG, ICON_ENERGY, ICON_CURRENT
 
 from .coordinators import SensorDataUpdateCoordinator
 
@@ -20,9 +20,11 @@ class ApiSensor(Entity):
     def __init__(
         self,
         coordinator: SensorDataUpdateCoordinator,
+        phase = 0
     ):
         """Initialize the sensor"""
         self.coordinator = coordinator
+        self.phase = phase
 
     @property
     def name(self):
@@ -168,7 +170,7 @@ class TotalEnergySensor(ApiSensor):
     def state(self):
         """Sensor state"""
         eto = self._get_status().get("eto")
-        _LOGGER.debug("allow (eto): %s", eto)
+        _LOGGER.debug("total energy (eto): %s", eto)
         if eto:
             self._state = float(eto) / 10
         else:
@@ -185,3 +187,46 @@ class TotalEnergySensor(ApiSensor):
     def unit_of_measurement(self):
         """Sensor unit of measurement"""
         return "kWh"
+
+
+class CurrentSensor(ApiSensor):
+    """
+    Displays nrg sensor (current)
+    """
+
+    _state = "Unknown"
+
+    @property
+    def name(self):
+        """Sensor name"""
+        return f"Charger Current L{self.phase}"
+
+    @property
+    def unique_id(self):
+        """Unique entity id"""
+        return f"goecharger:current_L{self.phase}"
+
+    @property
+    def state(self):
+        """Sensor state"""
+        nrg = self._get_status().get("nrg")
+        volt = 0
+        _LOGGER.debug("energy (nrg): %s", nrg)
+        if nrg:
+            volt = nrg[self.phase - 1]
+            if volt:
+                self._state = int(volt)
+        else:
+            self._state = "Unknown"
+
+        return self._state
+
+    @property
+    def icon(self):
+        """Sensor icon"""
+        return ICON_CURRENT
+
+    @property
+    def unit_of_measurement(self):
+        """Sensor unit of measurement"""
+        return "V"
