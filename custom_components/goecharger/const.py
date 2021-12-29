@@ -16,6 +16,7 @@ ICON_PLUG = "mdi:ev-plug-type2"
 ICON_ALLOW = "mdi:check-bold"
 ICON_ENERGY = "mdi:lightning-bolt-circle"
 ICON_CURRENT = "mdi:lightning-bolt-outline"
+ICON_VOLTAGE = "mdi:lightning-bolt-outline"
 
 # Platforms
 SENSOR = "sensor"

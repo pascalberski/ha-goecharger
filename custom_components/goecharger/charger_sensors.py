@@ -5,7 +5,7 @@ import logging
 
 from homeassistant.helpers.entity import Entity
 
-from .const import ICON_ALLOW, ICON_PLUG, ICON_ENERGY, ICON_CURRENT
+from .const import ICON_ALLOW, ICON_PLUG, ICON_ENERGY, ICON_VOLTAGE
 
 from .coordinators import SensorDataUpdateCoordinator
 
@@ -189,9 +189,9 @@ class TotalEnergySensor(ApiSensor):
         return "kWh"
 
 
-class CurrentSensor(ApiSensor):
+class VoltageSensor(ApiSensor):
     """
-    Displays nrg sensor (current)
+    Displays nrg sensor (voltage)
     """
 
     _state = "Unknown"
@@ -199,12 +199,12 @@ class CurrentSensor(ApiSensor):
     @property
     def name(self):
         """Sensor name"""
-        return f"Charger Current L{self.phase}"
+        return f"Charger Voltage L{self.phase}"
 
     @property
     def unique_id(self):
         """Unique entity id"""
-        return f"goecharger:current_L{self.phase}"
+        return f"goecharger:voltage_L{self.phase}"
 
     @property
     def state(self):
@@ -224,7 +224,7 @@ class CurrentSensor(ApiSensor):
     @property
     def icon(self):
         """Sensor icon"""
-        return ICON_CURRENT
+        return ICON_VOLTAGE
 
     @property
     def unit_of_measurement(self):
