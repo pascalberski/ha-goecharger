@@ -316,3 +316,45 @@ class PowerSensor(ApiSensor):
     def unit_of_measurement(self):
         """Sensor unit of measurement"""
         return "kW"
+
+
+class TotalPowerSensor(ApiSensor):
+    """
+    Displays nrg sensor (total_power)
+    """
+
+    _state = "Unknown"
+
+    @property
+    def name(self):
+        """Sensor name"""
+        return "Charger Total Power"
+
+    @property
+    def unique_id(self):
+        """Unique entity id"""
+        return "goecharger:total_power"
+
+    @property
+    def state(self):
+        """Sensor state"""
+        nrg = self._get_status().get("nrg")
+        power = -1
+        _LOGGER.debug("energy (nrg): %s", nrg)
+        if nrg:
+            power = nrg[11]
+            self._state = float(power) / 100
+        else:
+            self._state = "Unknown"
+
+        return self._state
+
+    @property
+    def icon(self):
+        """Sensor icon"""
+        return ICON_POWER
+
+    @property
+    def unit_of_measurement(self):
+        """Sensor unit of measurement"""
+        return "kW"

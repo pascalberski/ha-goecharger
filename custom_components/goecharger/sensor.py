@@ -11,6 +11,7 @@ from .charger_sensors import (
     StateSensor,
     AllowSensor,
     TotalEnergySensor,
+    TotalPowerSensor,
     VoltageSensor,
 )
 
@@ -44,6 +45,7 @@ def create_charger_sensors(coordinator):
         StateSensor(coordinator),
         AllowSensor(coordinator),
         TotalEnergySensor(coordinator),
+        TotalPowerSensor(coordinator),
     ]
 
     for i in range(1, 4):
