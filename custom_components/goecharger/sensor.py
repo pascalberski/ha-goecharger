@@ -5,7 +5,7 @@ import logging
 
 from homeassistant.core import Config, HomeAssistant
 
-from .charger_sensors import StateSensor, AllowSensor
+from .charger_sensors import StateSensor, AllowSensor, TotalEnergySensor
 
 from .const import (
     DOMAIN,
@@ -36,6 +36,7 @@ def create_charger_sensors(coordinator):
     charger_sensors = [
         StateSensor(coordinator),
         AllowSensor(coordinator),
+        TotalEnergySensor(coordinator),
     ]
 
     return charger_sensors

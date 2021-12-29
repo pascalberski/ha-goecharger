@@ -5,7 +5,7 @@ import logging
 
 from homeassistant.helpers.entity import Entity
 
-from .const import ICON_ALLOW, ICON_PLUG
+from .const import ICON_ALLOW, ICON_PLUG, ICON_ENERGY
 
 from .coordinators import SensorDataUpdateCoordinator
 
@@ -144,3 +144,43 @@ class AllowSensor(ApiSensor):
     def icon(self):
         """Sensor icon"""
         return ICON_ALLOW
+
+
+class TotalEnergySensor(ApiSensor):
+    """
+    Displays eto sensor
+    """
+
+    _state = "Unknown"
+
+    @property
+    def name(self):
+        """Sensor name"""
+        return "Charger Total Energy"
+
+    @property
+    def unique_id(self):
+        """Unique entity id"""
+        return "goecharger:total_energy"
+
+    @property
+    def state(self):
+        """Sensor state"""
+        eto = self._get_status().get("eto")
+        _LOGGER.debug("allow (eto): %s", eto)
+        if eto:
+            self._state = float(eto) / 10
+        else:
+            self._state = "Unknown"
+
+        return self._state
+
+    @property
+    def icon(self):
+        """Sensor icon"""
+        return ICON_ENERGY
+
+    @property
+    def unit_of_measurement(self):
+        """Sensor unit of measurement"""
+        return "kWh"
