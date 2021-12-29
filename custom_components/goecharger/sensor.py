@@ -35,22 +35,37 @@ async def async_setup_platform(
     # client = data.get("client")
 
     # charger sensors
-    sensor_coordinator = data.get("sensor_coordinator")
-    charger_sensors = create_charger_sensors(sensor_coordinator)
-    async_add_entities(charger_sensors, True)
+    sensor_coordinators = data.get("sensor_coordinators")
+    for sensor_coordinator in sensor_coordinators:
+        charger_sensors = create_charger_sensors(sensor_coordinator)
+        async_add_entities(charger_sensors, True)
 
 
 def create_charger_sensors(coordinator):
     charger_sensors = [
-        StateSensor(coordinator),
-        AllowSensor(coordinator),
-        TotalEnergySensor(coordinator),
-        TotalPowerSensor(coordinator),
+        StateSensor(coordinator, coordinator.charger_id, coordinator.charger_name),
+        AllowSensor(coordinator, coordinator.charger_id, coordinator.charger_name),
+        TotalEnergySensor(
+            coordinator, coordinator.charger_id, coordinator.charger_name
+        ),
+        TotalPowerSensor(coordinator, coordinator.charger_id, coordinator.charger_name),
     ]
 
     for i in range(1, 4):
-        charger_sensors.append(VoltageSensor(coordinator, i))
-        charger_sensors.append(CurrentSensor(coordinator, i))
-        charger_sensors.append(PowerSensor(coordinator, i))
+        charger_sensors.append(
+            VoltageSensor(
+                coordinator, coordinator.charger_id, coordinator.charger_name, i
+            )
+        )
+        charger_sensors.append(
+            CurrentSensor(
+                coordinator, coordinator.charger_id, coordinator.charger_name, i
+            )
+        )
+        charger_sensors.append(
+            PowerSensor(
+                coordinator, coordinator.charger_id, coordinator.charger_name, i
+            )
+        )
 
     return charger_sensors

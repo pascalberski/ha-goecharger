@@ -25,6 +25,7 @@ class ChargerApiClient:
             _LOGGER.debug(url)
 
             response = await client.request(method, url)
+            _LOGGER.debug(f"response: {response}")
 
             if response.status_code == 200:
                 return response.json()

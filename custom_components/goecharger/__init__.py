@@ -5,12 +5,14 @@ For more details about this integration, please refer to
 https://github.com/pascalberski/ha-goecharger
 """
 import logging
+from homeassistant.const import CONF_ID
 
-from homeassistant.const import CONF_HOST
 from homeassistant.core import Config, HomeAssistant
 from homeassistant.helpers import discovery
 import homeassistant.helpers.config_validation as cv
 from homeassistant.exceptions import PlatformNotReady
+
+from .const import CONF_HOST, CONF_NAME, CONF_CHARGERS
 
 from .const import (
     DOMAIN,
@@ -32,22 +34,29 @@ async def async_setup(hass: HomeAssistant, config: Config):
 
     charger_config = config[DOMAIN]
     # Configuration
-    host = charger_config.get(CONF_HOST)
+    #host = charger_config.get(CONF_HOST)
 
-    client = ChargerApiClient(host)
+    chargers = charger_config.get(CONF_CHARGERS)
+    sensor_coordinators = []
 
-    hass.data[DOMAIN]["host"] = host
-    hass.data[DOMAIN]["client"] = client
+    for charger in chargers:
+        host = charger.get(CONF_HOST)
+        charger_name = charger.get(CONF_NAME)
+        charger_id = charger.get(CONF_ID)
 
-    _LOGGER.debug("initialising sensor coordinator")
-    sensor_coordinator = SensorDataUpdateCoordinator(hass, client)
-    await sensor_coordinator.async_refresh()
+        client = ChargerApiClient(host)
 
-    if not sensor_coordinator.last_update_success:
-        _LOGGER.error("Unable to get data from charger")
-        raise PlatformNotReady
+        _LOGGER.debug(f"initialising sensor coordinator - {charger_id} - {charger_name} - {host}")
+        sensor_coordinator = SensorDataUpdateCoordinator(hass, client, charger_id, charger_name)
+        await sensor_coordinator.async_refresh()
 
-    hass.data[DOMAIN]["sensor_coordinator"] = sensor_coordinator
+        if not sensor_coordinator.last_update_success:
+            _LOGGER.error("Unable to get data from charger")
+            raise PlatformNotReady
+
+        sensor_coordinators.append(sensor_coordinator)
+
+    hass.data[DOMAIN]["sensor_coordinators"] = sensor_coordinators
 
     await discovery.async_load_platform(hass, "sensor", DOMAIN, {}, config)
 

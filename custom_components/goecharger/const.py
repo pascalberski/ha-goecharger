@@ -2,6 +2,9 @@
 Constants for go-echarger
 """
 # Base component constants
+from homeassistant.const import CONF_NAME
+
+
 NAME = "go-eCharger Integration"
 DOMAIN = "goecharger"
 DOMAIN_DATA = f"{DOMAIN}_data"
@@ -25,6 +28,9 @@ PLATFORMS = [SENSOR]
 
 # Configuration and options
 CONF_HOST = "host"
+CONF_NAME = "name"
+CONF_CHARGERS = "chargers"
+CONF_ID = "id"
 
 # Startup
 STARTUP_MESSAGE = f"""

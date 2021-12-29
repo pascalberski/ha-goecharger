@@ -24,9 +24,11 @@ class ApiSensor(Entity):
     Status Api Sensor
     """
 
-    def __init__(self, coordinator: SensorDataUpdateCoordinator, phase=0):
+    def __init__(self, coordinator: SensorDataUpdateCoordinator, charger_id: int, charger_name: str, phase=0):
         """Initialize the sensor"""
         self.coordinator = coordinator
+        self.charger_id = charger_id
+        self.charger_name = charger_name
         self.phase = phase
 
     @property
@@ -82,12 +84,12 @@ class StateSensor(ApiSensor):
     @property
     def name(self):
         """Sensor name"""
-        return "Charger State"
+        return f"{self.charger_name} State"
 
     @property
     def unique_id(self):
         """Unique entity id"""
-        return "goecharger:state"
+        return f"goecharger:{self.charger_id}:state"
 
     @property
     def state(self):
@@ -124,12 +126,12 @@ class AllowSensor(ApiSensor):
     @property
     def name(self):
         """Sensor name"""
-        return "Charger Allow"
+        return f"{self.charger_name} Allow"
 
     @property
     def unique_id(self):
         """Unique entity id"""
-        return "goecharger:allow"
+        return f"goecharger:{self.charger_id}:allow"
 
     @property
     def state(self):
@@ -162,12 +164,12 @@ class TotalEnergySensor(ApiSensor):
     @property
     def name(self):
         """Sensor name"""
-        return "Charger Total Energy"
+        return f"{self.charger_name} Total Energy"
 
     @property
     def unique_id(self):
         """Unique entity id"""
-        return "goecharger:total_energy"
+        return f"goecharger:{self.charger_id}:total_energy"
 
     @property
     def state(self):
@@ -202,12 +204,12 @@ class VoltageSensor(ApiSensor):
     @property
     def name(self):
         """Sensor name"""
-        return f"Charger Voltage L{self.phase}"
+        return f"{self.charger_name} Voltage L{self.phase}"
 
     @property
     def unique_id(self):
         """Unique entity id"""
-        return f"goecharger:voltage_L{self.phase}"
+        return f"goecharger:{self.charger_id}:voltage_L{self.phase}"
 
     @property
     def state(self):
@@ -244,12 +246,12 @@ class CurrentSensor(ApiSensor):
     @property
     def name(self):
         """Sensor name"""
-        return f"Charger Current L{self.phase}"
+        return f"{self.charger_name} Current L{self.phase}"
 
     @property
     def unique_id(self):
         """Unique entity id"""
-        return f"goecharger:current_L{self.phase}"
+        return f"goecharger:{self.charger_id}:current_L{self.phase}"
 
     @property
     def state(self):
@@ -286,12 +288,12 @@ class PowerSensor(ApiSensor):
     @property
     def name(self):
         """Sensor name"""
-        return f"Charger Power L{self.phase}"
+        return f"{self.charger_name} Power L{self.phase}"
 
     @property
     def unique_id(self):
         """Unique entity id"""
-        return f"goecharger:power_L{self.phase}"
+        return f"goecharger:{self.charger_id}:power_L{self.phase}"
 
     @property
     def state(self):
@@ -328,12 +330,12 @@ class TotalPowerSensor(ApiSensor):
     @property
     def name(self):
         """Sensor name"""
-        return "Charger Total Power"
+        return f"{self.charger_name} Total Power"
 
     @property
     def unique_id(self):
         """Unique entity id"""
-        return "goecharger:total_power"
+        return f"goecharger:{self.charger_id}:total_power"
 
     @property
     def state(self):

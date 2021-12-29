@@ -23,10 +23,12 @@ _LOGGER = logging.getLogger(__name__)
 class SensorDataUpdateCoordinator(DataUpdateCoordinator):
     """Manages fetching Status Data from charger api"""
 
-    def __init__(self, hass: HomeAssistant, client: ChargerApiClient):
+    def __init__(self, hass: HomeAssistant, client: ChargerApiClient, charger_id: int, charger_name: str):
         """Initialize"""
-        self.name = f"{DOMAIN}_sensor_coordinator"
+        self.name = f"{DOMAIN}_{charger_id}_sensor_coordinator"
         self._client = client
+        self.charger_id = charger_id
+        self.charger_name = charger_name
 
         super().__init__(
             hass, _LOGGER, name=self.name, update_interval=REFRESH_INTERVAL_STATUS
