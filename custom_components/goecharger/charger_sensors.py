@@ -64,6 +64,7 @@ class ApiSensor(Entity):
             return self.coordinator.data
         except Exception as exc:
             _LOGGER.error("Unable to get api data\n%s", exc)
+            return None
 
 
 class StateSensor(ApiSensor):
