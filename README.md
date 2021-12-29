@@ -7,15 +7,27 @@
 
 # go-eCharger Integration for Home Assistant
 
-## Available sensor
+### Configuration
+in configuration.yaml
+```
+goecharger:
+  chargers:
+    - id: 1
+      name: Charger1
+      host: ip/hosname
+    - id: 2
+      name: Charger2
+      host: ip/hosname
+```
+
+### Available sensor
 - state (car)
 - allow charging (alw)
 - total energy (eto)
 - current sensor for each phase (nrg)
 - voltage sensor for each phase (nrg)
 - power sensor for each phase (nrg)
-
-## Todo
+- total power sensor (nrg)
 
 
 
