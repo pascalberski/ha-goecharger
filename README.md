@@ -6,9 +6,28 @@
 [![BuyMeCoffee][buymecoffeebadge]][buymecoffee]
 
 # go-eCharger Integration for Home Assistant
+A simple go-eCharger V1-api integration for Home Assistant
+
+### Getting started
+##### Installation via HACS
+1. Go to your HACS-Integrations page (.../hacs/integrations)
+2. Click on the three points in the top right corner
+3. Click on Custom Repositories
+4. Paste this url: https://github.com/pascalberski/ha-goecharger/
+5. Select Integration and click on Add
+6. Click on Install
+7. Configure the integration as shown below and restart Home Assistant.
+
+##### Manual installation
+1. Download this repository
+2. Go to the `custom_components` in your Home Assistant folder (it should be in the directory where the `configuration.yaml` can be found)
+    - if the `custom_components` directory doesn't exist, create it
+3. Copy the goecharger directory from the `custom_components` folder in the downloaded repository to the `custom_components` folder in your Home Assistant folder
+4. Configure the integration as shown below and restart Home Assistant.
+
 
 ### Configuration
-in configuration.yaml
+in `configuration.yaml`
 ```
 goecharger:
   chargers:
@@ -21,13 +40,13 @@ goecharger:
 ```
 
 ### Available sensor
-- state (car)
-- allow charging (alw)
-- total energy (eto)
-- current sensor for each phase (nrg)
-- voltage sensor for each phase (nrg)
-- power sensor for each phase (nrg)
-- total power sensor (nrg)
+- state (`car`)
+- allow charging (`alw`)
+- total energy (`eto`)
+- current sensor for each phase (`nrg`)
+- voltage sensor for each phase (`nrg`)
+- power sensor for each phase (`nrg`)
+- total power sensor (`nrg`)
 
 
 
